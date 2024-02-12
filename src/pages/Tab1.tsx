@@ -14,6 +14,7 @@ import ProductCard from "../components/ProductCard";
 import { Product } from "../interfaces/product.interface";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/productsSlice";
+import { Container } from "@mui/material";
 
 const Tab1: React.FC = () => {
   const dispatch = useDispatch();
@@ -56,8 +57,15 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        {/* <ExploreContainer name="Tab 1 page" /> */}
+        <Container sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 3
+        }}>
         {displayProducts()}
+        </Container>
       </IonContent>
     </IonPage>
   );
