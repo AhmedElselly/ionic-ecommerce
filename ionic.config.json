@@ -1,0 +1,7 @@
+{
+  "name": "ecommerce_start",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
