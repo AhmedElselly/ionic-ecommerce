@@ -8,6 +8,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const ProductCard: React.FC<Product> = ({
   id,
@@ -19,7 +21,7 @@ const ProductCard: React.FC<Product> = ({
   rating,
 }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, height: 400, background: 'transparent', color: '#fff', mb:2 }}>
       <CardMedia
         sx={{ height: 240 }}
         image={image}
@@ -27,17 +29,31 @@ const ProductCard: React.FC<Product> = ({
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div" sx={{
-          fontSize: 18
+          fontSize: 12
         }}>
-          {title}
+          {title.substring(0, 37)}...
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography gutterBottom variant="h5" component="div" sx={{
+          fontSize: 15,
+          fontWeight: 600
+        }}>
+          ${price}
+        </Typography>
+        {/* <Typography variant="body2" color="text.secondary">
           {description.substring(0, 50)}
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button sx={{
+          fontSize: '12px !important'
+        }}  color="error" variant="outlined">
+          <AddShoppingCartIcon/>
+        </Button>
+        <Button sx={{
+          fontSize: '12px !important'
+        }} variant="outlined">
+          <VisibilityIcon/>
+        </Button>
       </CardActions>
     </Card>
   );
