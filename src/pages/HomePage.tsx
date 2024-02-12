@@ -1,6 +1,9 @@
 import {
+  IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
+  IonModal,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -16,8 +19,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/productsSlice";
 import { Container } from "@mui/material";
 import { Col, Row } from "react-bootstrap";
+import Wrapper from "../components/Wrapper";
+import { addToCart } from "../store/cartSlice";
 
 const HomePage: React.FC = () => {
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const { products, isLoading, error, loaded } = useSelector(
     (state: any) => state.products
@@ -34,21 +40,20 @@ const HomePage: React.FC = () => {
     return <h1>Error fetching data...</h1>;
   }
 
+  const handleOpenCart = (item: Product) => {
+    dispatch(addToCart(item));
+    setOpen(true);
+  };
+
   const displayProducts = () => {
     return (
       loaded &&
       products?.map((product: Product) => {
         return (
-          <Col>
+          <Col sm={6}>
             <ProductCard
-              key={product.id}
-              id={product.id}
-              title={product.title}
-              image={product.image}
-              description={product.description}
-              category={product.category}
-              price={product.price}
-              rating={product.rating}
+              product={product}
+              handleOpenCart={handleOpenCart}
             />
           </Col>
         );
@@ -59,16 +64,35 @@ const HomePage: React.FC = () => {
   return (
     <IonPage>
       <Layout name="Home" />
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <Container>
-          <Row>{displayProducts()}</Row>
-        </Container>
-      </IonContent>
+      <Wrapper pageName={"Home"}>
+        <IonContent fullscreen>
+          <IonHeader collapse="condense">
+            <IonToolbar>
+              <IonTitle size="large">Home</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <Container>
+            <Row>{displayProducts()}</Row>
+          </Container>
+        </IonContent>
+        <IonModal isOpen={open}>
+          <IonHeader>
+            <IonToolbar>
+              <IonTitle>Modal</IonTitle>
+              <IonButtons slot="end">
+                <IonButton onClick={() => setOpen(false)}>Close</IonButton>
+              </IonButtons>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent className="ion-padding">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
+              reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui.
+              Eaque, dicta.
+            </p>
+          </IonContent>
+        </IonModal>
+      </Wrapper>
     </IonPage>
   );
 };
